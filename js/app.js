@@ -12,17 +12,25 @@ const inputNotas = document.getElementById('notas');
 const inputImagen = document.getElementById('imagen');
 const inputPuestoTrabajo = document.getElementById('puestoTrabajo');
 const inputEmpresa= document.getElementById('empresa');
+const agenda = [];
 
 //Funciones
+const guardarLocalstorage = ()=>{
+ localStorage.setItem('agendaKey', JSON.stringify(agenda))
+}
+
 const crearContacto = ()=>{
     console.log('aqui tengo que crear el contacto')
     // todo Agregar validaciones
     //buscar los datos del formulario y crear un objeto contacto
+    const contactoNuevo = new Contacto(inputNombre.value, inputApellido.value, inputTelefono.value, inputEmail.value, inputImagen.value, inputEmpresa.value, inputPuestoTrabajo.value, inputDireccion.value, inputNotas.value)
     //guardar el contacto en la agenda de contactos
-    //guardar la agenda en el localstorage
-    const contactoNuevo = new Contacto(1,1,1,1,1,1,1,1,1,1)
+    agenda.push(contactoNuevo)
     console.log(contactoNuevo)
+    //guardar la agenda en el localstorage
+    guardarLocalstorage();
 }
+
 
 
 //manejadores de eventos
