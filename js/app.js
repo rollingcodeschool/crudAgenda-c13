@@ -12,8 +12,9 @@ const inputNotas = document.getElementById('notas');
 const inputImagen = document.getElementById('imagen');
 const inputPuestoTrabajo = document.getElementById('puestoTrabajo');
 const inputEmpresa= document.getElementById('empresa');
-const agenda = [];
-
+// verificar si el localstorage tiene contactos, si no tiene hago un array vacio
+const agenda = JSON.parse(localStorage.getItem('agendaKey')) || [];
+console.log(agenda)
 //Funciones
 const guardarLocalstorage = ()=>{
  localStorage.setItem('agendaKey', JSON.stringify(agenda))
@@ -29,6 +30,13 @@ const crearContacto = ()=>{
     console.log(contactoNuevo)
     //guardar la agenda en el localstorage
     guardarLocalstorage();
+    //mostrar un mensaje al usuario final
+    //limpiar el formulario
+    limpiarFormulario()
+}
+
+function limpiarFormulario(){
+    formularioContacto.reset()
 }
 
 
