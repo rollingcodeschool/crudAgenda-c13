@@ -59,11 +59,7 @@
       <section class="" id="seccionTablaContactos">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h1 class="mb-0">Agenda de Contactos</h1>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="btnAgregarContacto"
-          >
+          <button type="button" class="btn btn-primary" id="btnAgregarContacto">
             <i class="bi bi-person-plus-fill"></i> Agregar Contacto
           </button>
         </div>
@@ -80,35 +76,6 @@
               </tr>
             </thead>
             <tbody id="tablaContactosBody">
-              <th scope="row">1</th>
-              <td>Susana</td>
-              <td>Perez</td>
-              <td>381777663</td>
-              <td>
-                <img
-                  src="https://images.pexels.com/photos/1848565/pexels-photo-1848565.jpeg"
-                  alt="Susana Perez"
-                  class="img-thumbnail img-table"
-                />
-              </td>
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm me-2 btn-ver-detalle"
-                >
-                  <i class="bi bi-eye"></i>
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-warning btn-sm me-2 btn-editar"
-               
-                >
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-sm btn-borrar">
-                  <i class="bi bi-trash"></i>
-                </button>
-              </td>
             </tbody>
           </table>
         </div>
@@ -277,20 +244,20 @@
                       </div>
                     </div>
                   </div>
-                     <div class="mb-3">
-                  <label for="imagen" class="form-label"
-                    >URL de la Foto (Opcional)</label
-                  >
-                  <input
-                    type="url"
-                    class="form-control"
-                    id="imagen"
-                    placeholder="Ej: https://example.com/imagen.jpg"
-                  />
-                  <div class="invalid-feedback">
-                    Por favor ingresa una URL de imagen válida.
+                  <div class="mb-3">
+                    <label for="imagen" class="form-label"
+                      >URL de la Foto (Opcional)</label
+                    >
+                    <input
+                      type="url"
+                      class="form-control"
+                      id="imagen"
+                      placeholder="Ej: https://example.com/imagen.jpg"
+                    />
+                    <div class="invalid-feedback">
+                      Por favor ingresa una URL de imagen válida.
+                    </div>
                   </div>
-                </div>
                   <div class="col-md-6">
                     <div class="mb-3">
                       <label for="empresa" class="form-label">Empresa</label>
@@ -302,12 +269,18 @@
                       <label for="puestoTrabajo" class="form-label"
                         >Puesto de Trabajo</label
                       >
-                      <input type="text" class="form-control" id="puestoTrabajo" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="puestoTrabajo"
+                      />
                     </div>
                   </div>
                   <div>
                     <div class="mb-3">
-                      <label for="direccion" class="form-label">Dirección</label>
+                      <label for="direccion" class="form-label"
+                        >Dirección</label
+                      >
                       <input type="text" class="form-control" id="direccion" />
                     </div>
                   </div>
