@@ -53,6 +53,8 @@ const crearContacto = () => {
   });
   //limpiar el formulario
   limpiarFormulario();
+  //dibuje el contacto en la tabla
+  dibujarFila(contactoNuevo, agenda.length)
 };
 
 function limpiarFormulario() {
