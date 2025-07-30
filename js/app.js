@@ -26,7 +26,8 @@ const guardarLocalstorage = () => {
 
 const crearContacto = () => {
   console.log("aqui tengo que crear el contacto");
-  // todo Agregar validaciones
+  //todo Agregar validaciones
+ //todo agregar una imagen por defecto en el caso de no cargar foto
   //buscar los datos del formulario y crear un objeto contacto
   const contactoNuevo = new Contacto(
     inputNombre.value,
