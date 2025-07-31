@@ -121,14 +121,27 @@ window.borrarContacto = (id) => {
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
     confirmButtonText: "Borrar",
-    cancelButtonText: "Cancelar"
+    cancelButtonText: "Cancelar",
   }).then((result) => {
+    console.log(result);
     if (result.isConfirmed) {
+      // aqui agrego la logica para borrar
+      // tengo que buscar en que posicion esta el contacto con el id que quiero borrar
+      const indiceContacto = agenda.findIndex((contacto) => contacto.id === id);
+      // con splice borramos el elemento de determinada posicion del array
+      agenda.splice(indiceContacto, 1);
+      //actualizar el localstorage
+      guardarLocalstorage();
+      //actualizar la tabla
+      tbody.children[indiceContacto].remove();
+      //todoL: actualizar el numero de fila del array.
+
       Swal.fire({
-        title: "Deleted!",
-        text: "Your file has been deleted.",
+        title: "Contacto eliminado",
+        text: "El contacto fue eliminado satisfactoriamente",
         icon: "success",
       });
+      console.log(agenda);
     }
   });
 };
