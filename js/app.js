@@ -14,7 +14,7 @@ const inputNotas = document.getElementById("notas");
 const inputImagen = document.getElementById("imagen");
 const inputPuestoTrabajo = document.getElementById("puestoTrabajo");
 const inputEmpresa = document.getElementById("empresa");
-const tbody = document.querySelector('#tablaContactosBody')
+const tbody = document.querySelector("#tablaContactosBody");
 // verificar si el localstorage tiene contactos, si no tiene hago un array vacio
 const agenda = JSON.parse(localStorage.getItem("agendaKey")) || [];
 console.log(agenda);
@@ -27,7 +27,7 @@ const guardarLocalstorage = () => {
 const crearContacto = () => {
   console.log("aqui tengo que crear el contacto");
   //todo Agregar validaciones
- //todo agregar una imagen por defecto en el caso de no cargar foto
+  //todo agregar una imagen por defecto en el caso de no cargar foto
   //buscar los datos del formulario y crear un objeto contacto
   const contactoNuevo = new Contacto(
     inputNombre.value,
@@ -55,26 +55,26 @@ const crearContacto = () => {
   //limpiar el formulario
   limpiarFormulario();
   //dibuje el contacto en la tabla
-  dibujarFila(contactoNuevo, agenda.length)
+  dibujarFila(contactoNuevo, agenda.length);
 };
 
 function limpiarFormulario() {
   formularioContacto.reset();
 }
 
-const cargarContactos = ()=>{
-    //verificar si tengo contactos para cargar
-    if(agenda.length !== 0){
-        //recorrer mi agenda y por cada elemento de la agenda
-        agenda.map((itemContacto, indice)=> dibujarFila(itemContacto, indice+1) )
-    }else{
-        // todo: dibujar un parrafo que diga que no tenemos contactos 
-    }
-    // si tengo tengo que dibujar las filas en la tabla
-}
+const cargarContactos = () => {
+  //verificar si tengo contactos para cargar
+  if (agenda.length !== 0) {
+    //recorrer mi agenda y por cada elemento de la agenda
+    agenda.map((itemContacto, indice) => dibujarFila(itemContacto, indice + 1));
+  } else {
+    // todo: dibujar un parrafo que diga que no tenemos contactos
+  }
+  // si tengo tengo que dibujar las filas en la tabla
+};
 
-const dibujarFila = (itemContacto, fila)=>{
-    tbody.innerHTML +=`
+const dibujarFila = (itemContacto, fila) => {
+  tbody.innerHTML += `
      <tr>
                 <th scope="row">${fila}</th>
                 <td>${itemContacto.nombre}</td>
@@ -103,13 +103,35 @@ const dibujarFila = (itemContacto, fila)=>{
                   <button
                     type="button"
                     class="btn btn-danger btn-sm btn-borrar"
+                    onclick="borrarContacto('${itemContacto.id}')"
                   >
                     <i class="bi bi-trash"></i>
                   </button>
                 </td>
               </tr>
-    `
-}
+    `;
+};
+
+window.borrarContacto = (id) => {
+  Swal.fire({
+    title: "Estas seguro de eliminar el contacto",
+    text: "No puedes revertir este paso",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Borrar",
+    cancelButtonText: "Cancelar"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success",
+      });
+    }
+  });
+};
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", () => {
