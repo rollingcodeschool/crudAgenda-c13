@@ -15,6 +15,7 @@ const inputImagen = document.getElementById("imagen");
 const inputPuestoTrabajo = document.getElementById("puestoTrabajo");
 const inputEmpresa = document.getElementById("empresa");
 const tbody = document.querySelector("#tablaContactosBody");
+let estoyCreando = true;
 // verificar si el localstorage tiene contactos, si no tiene hago un array vacio
 const agenda = JSON.parse(localStorage.getItem("agendaKey")) || [];
 console.log(agenda);
@@ -147,11 +148,11 @@ window.borrarContacto = (id) => {
   });
 };
 
-window.prepararContacto = (id)=>{
+window.prepararContacto = (id) => {
   // todo: modificar el titulo del formulario
   //cargar los datos del contacto para que los vea el usuario
-  const contactoBuscado = agenda.find((contacto)=> contacto.id === id)
-  console.log(contactoBuscado)
+  const contactoBuscado = agenda.find((contacto) => contacto.id === id);
+  console.log(contactoBuscado);
   //mostrar los datos del contacto en el form
   inputNombre.value = contactoBuscado.nombre;
   inputApellido.value = contactoBuscado.apellido;
@@ -161,20 +162,32 @@ window.prepararContacto = (id)=>{
   inputImagen.value = contactoBuscado.imagen;
   inputNotas.value = contactoBuscado.notas;
   inputPuestoTrabajo.value = contactoBuscado.puestoTrabajo;
-  inputTelefono.value = contactoBuscado.telefono 
+  inputTelefono.value = contactoBuscado.telefono;
+  //cambio la variable que controla el crear/editar
+  estoyCreando = false;
   //abrir el modal
-  modalFormularioContacto.show()
-}
+  modalFormularioContacto.show();
+};
+
+const editarContacto = () => {
+  console.log("aqui tengo que editar");
+};
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", () => {
+  limpiarFormulario();
+  estoyCreando = true;
   modalFormularioContacto.show();
 });
 
 formularioContacto.addEventListener("submit", (e) => {
   e.preventDefault();
   //aqui tengo que crear/editar un contacto
-  crearContacto();
+  if (estoyCreando) {
+    crearContacto();
+  } else {
+    editarContacto();
+  }
 });
 
 cargarContactos();
