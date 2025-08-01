@@ -97,6 +97,7 @@ const dibujarFila = (itemContacto, fila) => {
                   <button
                     type="button"
                     class="btn btn-warning btn-sm me-2 btn-editar"
+                    onclick="prepararContacto('${itemContacto.id}')"
                   >
                     <i class="bi bi-pencil"></i>
                   </button>
@@ -145,6 +146,25 @@ window.borrarContacto = (id) => {
     }
   });
 };
+
+window.prepararContacto = (id)=>{
+  // todo: modificar el titulo del formulario
+  //cargar los datos del contacto para que los vea el usuario
+  const contactoBuscado = agenda.find((contacto)=> contacto.id === id)
+  console.log(contactoBuscado)
+  //mostrar los datos del contacto en el form
+  inputNombre.value = contactoBuscado.nombre;
+  inputApellido.value = contactoBuscado.apellido;
+  inputEmail.value = contactoBuscado.email;
+  inputDireccion.value = contactoBuscado.direccion;
+  inputEmpresa.value = contactoBuscado.empresa;
+  inputImagen.value = contactoBuscado.imagen;
+  inputNotas.value = contactoBuscado.notas;
+  inputPuestoTrabajo.value = contactoBuscado.puestoTrabajo;
+  inputTelefono.value = contactoBuscado.telefono 
+  //abrir el modal
+  modalFormularioContacto.show()
+}
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", () => {
