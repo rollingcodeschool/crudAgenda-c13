@@ -137,8 +137,14 @@ window.borrarContacto = (id) => {
       guardarLocalstorage();
       //actualizar la tabla
       tbody.children[indiceContacto].remove();
-      //todoL: actualizar el numero de fila del array.
-
+      //? actualizar el numero de fila del array.
+      const filasRestantes = tbody.children;
+      for (let i = 0; i < filasRestantes.length; i++) {
+        const celdaIndice = filasRestantes[i].querySelector("th");
+        if (celdaIndice) {
+          celdaIndice.textContent = i + 1; // Actualiza el texto con el nuevo índice
+        }
+      }
       Swal.fire({
         title: "Contacto eliminado",
         text: "El contacto fue eliminado satisfactoriamente",
@@ -164,7 +170,7 @@ window.prepararContacto = (id) => {
   inputNotas.value = contactoBuscado.notas;
   inputPuestoTrabajo.value = contactoBuscado.puestoTrabajo;
   inputTelefono.value = contactoBuscado.telefono;
-  idContacto = id
+  idContacto = id;
   //cambio la variable que controla el crear/editar
   estoyCreando = false;
   //abrir el modal
@@ -174,22 +180,24 @@ window.prepararContacto = (id) => {
 const editarContacto = () => {
   console.log("aqui tengo que editar");
   //buscar en que posicion del array esta el contacto con ID
-  const indiceContacto = agenda.findIndex((contacto)=> contacto.id === idContacto)
+  const indiceContacto = agenda.findIndex(
+    (contacto) => contacto.id === idContacto
+  );
   //modificar el contacto
- agenda[indiceContacto].nombre = inputNombre.value;
- agenda[indiceContacto].apellido = inputApellido.value;
- agenda[indiceContacto].email = inputEmail.value;
- agenda[indiceContacto].telefono = inputTelefono.value;
- agenda[indiceContacto].imagen = inputImagen.value;
-//  todo: agregar el resto de los inputs
-//actualizar el localstorage
-guardarLocalstorage()
-//actualizar fila de la tabla
+  agenda[indiceContacto].nombre = inputNombre.value;
+  agenda[indiceContacto].apellido = inputApellido.value;
+  agenda[indiceContacto].email = inputEmail.value;
+  agenda[indiceContacto].telefono = inputTelefono.value;
+  agenda[indiceContacto].imagen = inputImagen.value;
+  //  todo: agregar el resto de los inputs
+  //actualizar el localstorage
+  guardarLocalstorage();
+  //actualizar fila de la tabla
 
-//cerrar el modal
-modalFormularioContacto.hide();
+  //cerrar el modal
+  modalFormularioContacto.hide();
 
-// todo: mostrar una ventana de sweetalert para indicar que el contacto fue editado correctamente.
+  // todo: mostrar una ventana de sweetalert para indicar que el contacto fue editado correctamente.
 };
 
 //manejadores de eventos
