@@ -1,4 +1,5 @@
 import Contacto from "./contacto.js";
+import { validarCantidadCaracteres } from "./validaciones.js";
 // elementos del DOM
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
 const modalFormularioContacto = new bootstrap.Modal(
@@ -29,35 +30,38 @@ const guardarLocalstorage = () => {
 const crearContacto = () => {
   console.log("aqui tengo que crear el contacto");
   //todo Agregar validaciones
-  //todo agregar una imagen por defecto en el caso de no cargar foto
-  //buscar los datos del formulario y crear un objeto contacto
-  const contactoNuevo = new Contacto(
-    inputNombre.value,
-    inputApellido.value,
-    inputTelefono.value,
-    inputEmail.value,
-    inputImagen.value,
-    inputEmpresa.value,
-    inputPuestoTrabajo.value,
-    inputDireccion.value,
-    inputNotas.value
-  );
-  //guardar el contacto en la agenda de contactos
-  agenda.push(contactoNuevo);
-  console.log(contactoNuevo);
-  //guardar la agenda en el localstorage
-  guardarLocalstorage();
-  //mostrar un mensaje al usuario final
-  Swal.fire({
-    title: "Contacto creado",
-    text: `El contacto ${inputNombre.value} fue creado correctamente.`,
-    icon: "success",
-    confirmButtonText: "Ok",
-  });
-  //limpiar el formulario
-  limpiarFormulario();
-  //dibuje el contacto en la tabla
-  dibujarFila(contactoNuevo, agenda.length);
+  if (validacion()) {
+    //buscar los datos del formulario y crear un objeto contacto
+    const contactoNuevo = new Contacto(
+      inputNombre.value,
+      inputApellido.value,
+      inputTelefono.value,
+      inputEmail.value,
+      inputImagen.value,
+      inputEmpresa.value,
+      inputPuestoTrabajo.value,
+      inputDireccion.value,
+      inputNotas.value
+    );
+    //guardar el contacto en la agenda de contactos
+    agenda.push(contactoNuevo);
+    console.log(contactoNuevo);
+    //guardar la agenda en el localstorage
+    guardarLocalstorage();
+    //mostrar un mensaje al usuario final
+    Swal.fire({
+      title: "Contacto creado",
+      text: `El contacto ${inputNombre.value} fue creado correctamente.`,
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
+    //limpiar el formulario
+    limpiarFormulario();
+    //dibuje el contacto en la tabla
+    dibujarFila(contactoNuevo, agenda.length);
+  }else{
+    console.log('hay errores en la validacion')
+  }
 };
 
 function limpiarFormulario() {
@@ -164,7 +168,7 @@ window.prepararContacto = (id) => {
   inputNotas.value = contactoBuscado.notas;
   inputPuestoTrabajo.value = contactoBuscado.puestoTrabajo;
   inputTelefono.value = contactoBuscado.telefono;
-  idContacto = id
+  idContacto = id;
   //cambio la variable que controla el crear/editar
   estoyCreando = false;
   //abrir el modal
@@ -174,22 +178,32 @@ window.prepararContacto = (id) => {
 const editarContacto = () => {
   console.log("aqui tengo que editar");
   //buscar en que posicion del array esta el contacto con ID
-  const indiceContacto = agenda.findIndex((contacto)=> contacto.id === idContacto)
+  const indiceContacto = agenda.findIndex(
+    (contacto) => contacto.id === idContacto
+  );
   //modificar el contacto
- agenda[indiceContacto].nombre = inputNombre.value;
- agenda[indiceContacto].apellido = inputApellido.value;
- agenda[indiceContacto].email = inputEmail.value;
- agenda[indiceContacto].telefono = inputTelefono.value;
- agenda[indiceContacto].imagen = inputImagen.value;
-//  todo: agregar el resto de los inputs
-//actualizar el localstorage
-guardarLocalstorage()
-//actualizar fila de la tabla
+  agenda[indiceContacto].nombre = inputNombre.value;
+  agenda[indiceContacto].apellido = inputApellido.value;
+  agenda[indiceContacto].email = inputEmail.value;
+  agenda[indiceContacto].telefono = inputTelefono.value;
+  agenda[indiceContacto].imagen = inputImagen.value;
+  //  todo: agregar el resto de los inputs
+  //actualizar el localstorage
+  guardarLocalstorage();
+  //actualizar fila de la tabla
 
-//cerrar el modal
-modalFormularioContacto.hide();
+  //cerrar el modal
+  modalFormularioContacto.hide();
 
-// todo: mostrar una ventana de sweetalert para indicar que el contacto fue editado correctamente.
+  // todo: mostrar una ventana de sweetalert para indicar que el contacto fue editado correctamente.
+};
+
+const validacion = () => {
+  let datosValidos = true;
+  if (!validarCantidadCaracteres(inputNombre, 2, 50)) {
+    datosValidos = false;
+  }
+  return datosValidos;
 };
 
 //manejadores de eventos
