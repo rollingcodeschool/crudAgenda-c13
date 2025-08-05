@@ -15,7 +15,7 @@ const inputImagen = document.getElementById("imagen");
 const inputPuestoTrabajo = document.getElementById("puestoTrabajo");
 const inputEmpresa = document.getElementById("empresa");
 const tbody = document.querySelector("#tablaContactosBody");
-const tituloModal = document.getElementById('contactoModalLabel')
+const tituloModal = document.getElementById("contactoModalLabel");
 let estoyCreando = true;
 let idContacto = null;
 // verificar si el localstorage tiene contactos, si no tiene hago un array vacio
@@ -37,7 +37,9 @@ const crearContacto = () => {
     inputApellido.value,
     inputTelefono.value,
     inputEmail.value,
-    inputImagen.value.length!== 0 ? inputImagen.value: 'https://images.pexels.com/photos/28216688/pexels-photo-28216688.png',
+    inputImagen.value.length !== 0
+      ? inputImagen.value
+      : "https://images.pexels.com/photos/28216688/pexels-photo-28216688.png",
     inputEmpresa.value,
     inputPuestoTrabajo.value,
     inputDireccion.value,
@@ -176,7 +178,7 @@ window.prepararContacto = (id) => {
   estoyCreando = false;
   //abrir el modal
   modalFormularioContacto.show();
-  tituloModal.textContent ='Editar contacto'
+  tituloModal.textContent = "Editar contacto";
 };
 
 const editarContacto = () => {
@@ -195,18 +197,19 @@ const editarContacto = () => {
   //actualizar el localstorage
   guardarLocalstorage();
   //actualizar fila de la tabla
-const filaEditada = tbody.children[indiceContacto];
-    if (filaEditada) {
-      filaEditada.children[1].textContent = agenda[indiceContacto].nombre;
-      filaEditada.children[2].textContent = agenda[indiceContacto].apellido;
-      filaEditada.children[3].textContent = agenda[indiceContacto].telefono;
-      filaEditada.children[4].children[0].src = agenda[indiceContacto].imagen;
-    }
+  const filaEditada = tbody.children[indiceContacto];
+  if (filaEditada) {
+    // tr.td.img
+    filaEditada.children[1].textContent = agenda[indiceContacto].nombre;
+    filaEditada.children[2].textContent = agenda[indiceContacto].apellido;
+    filaEditada.children[3].textContent = agenda[indiceContacto].telefono;
+    filaEditada.children[4].children[0].src = agenda[indiceContacto].imagen;
+  }
   //cerrar el modal
   modalFormularioContacto.hide();
 
   // todo: mostrar una ventana de sweetalert para indicar que el contacto fue editado correctamente.
-    Swal.fire({
+  Swal.fire({
     title: "Contacto actualizado",
     text: `El contacto ${agenda[indiceContacto].nombre} fue actualizado correctamente.`,
     icon: "success",
@@ -218,7 +221,7 @@ const filaEditada = tbody.children[indiceContacto];
 btnAgregarContacto.addEventListener("click", () => {
   limpiarFormulario();
   estoyCreando = true;
-  tituloModal.textContent = 'Crear contacto'
+  tituloModal.textContent = "Crear contacto";
   modalFormularioContacto.show();
 });
 
