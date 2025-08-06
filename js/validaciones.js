@@ -12,3 +12,8 @@ export const validarCantidadCaracteres = (input, min, max) => {
 
 // texto@texto.texto
 
+export const validarEmail= (input)=>{
+    const regExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+    console.log(regExp.test(input.value))
+}
+
