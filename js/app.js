@@ -203,6 +203,9 @@ const validacion = () => {
   if (!validarCantidadCaracteres(inputNombre, 2, 50)) {
     datosValidos = false;
   }
+  if (!validarCantidadCaracteres(inputApellido, 3, 50)) {
+    datosValidos = false;
+  }
   return datosValidos;
 };
 

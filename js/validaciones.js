@@ -1,7 +1,14 @@
 export const validarCantidadCaracteres = (input, min, max) => {
-    if(input.length >= min && input.length <= max ){
-        return true
-    }else{
-        return false
-    }
+  if (input.value.length >= min && input.value.length <= max) {
+    input.classList.add("is-valid");
+    input.classList.remove("is-invalid");
+    return true;
+  } else {
+    input.classList.add("is-invalid");
+    input.classList.remove("is-valid");
+    return false;
+  }
 };
+
+// texto@texto.texto
+
