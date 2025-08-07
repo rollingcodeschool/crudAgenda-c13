@@ -1,4 +1,5 @@
 import Contacto from "./contacto.js";
+import { validarCantidadCaracteres } from "./validaciones.js";
 // elementos del DOM
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
 const modalFormularioContacto = new bootstrap.Modal(
@@ -28,10 +29,9 @@ const guardarLocalstorage = () => {
 };
 
 const crearContacto = () => {
-  console.log("aqui tengo que crear el contacto");
   //todo Agregar validaciones
-  //todo agregar una imagen por defecto en el caso de no cargar foto
-  //buscar los datos del formulario y crear un objeto contacto
+  if (validacion()) {
+     //buscar los datos del formulario y crear un objeto contacto
   const contactoNuevo = new Contacto(
     inputNombre.value,
     inputApellido.value,
@@ -61,6 +61,9 @@ const crearContacto = () => {
   limpiarFormulario();
   //dibuje el contacto en la tabla
   dibujarFila(contactoNuevo, agenda.length);
+  }else{
+    console.log('hay errores en la validacion')
+  }
 };
 
 function limpiarFormulario() {
@@ -193,8 +196,11 @@ const editarContacto = () => {
   agenda[indiceContacto].email = inputEmail.value;
   agenda[indiceContacto].telefono = inputTelefono.value;
   agenda[indiceContacto].imagen = inputImagen.value;
-  //  todo: agregar el resto de los inputs
-  //actualizar el localstorage
+  agenda[indiceContacto].empresa = inputEmpresa.value;
+  agenda[indiceContacto].puestoTrabajo = inputPuestoTrabajo.value;
+  agenda[indiceContacto].direccion = inputDireccion.value;
+  agenda[indiceContacto].notas = inputNotas.value;
+   //actualizar el localstorage
   guardarLocalstorage();
   //actualizar fila de la tabla
   const filaEditada = tbody.children[indiceContacto];
@@ -208,13 +214,23 @@ const editarContacto = () => {
   //cerrar el modal
   modalFormularioContacto.hide();
 
-  // todo: mostrar una ventana de sweetalert para indicar que el contacto fue editado correctamente.
   Swal.fire({
     title: "Contacto actualizado",
     text: `El contacto ${agenda[indiceContacto].nombre} fue actualizado correctamente.`,
     icon: "success",
     confirmButtonText: "Ok",
   });
+};
+
+const validacion = () => {
+  let datosValidos = true;
+  if (!validarCantidadCaracteres(inputNombre, 2, 50)) {
+    datosValidos = false;
+  }
+  if (!validarCantidadCaracteres(inputApellido, 3, 50)) {
+    datosValidos = false;
+  }
+  return datosValidos;
 };
 
 //manejadores de eventos
