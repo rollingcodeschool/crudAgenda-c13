@@ -17,6 +17,7 @@ const inputPuestoTrabajo = document.getElementById("puestoTrabajo");
 const inputEmpresa = document.getElementById("empresa");
 const tbody = document.querySelector("#tablaContactosBody");
 const tituloModal = document.getElementById("contactoModalLabel");
+const tabla = document.querySelector(".table-responsive");
 let estoyCreando = true;
 let idContacto = null;
 // verificar si el localstorage tiene contactos, si no tiene hago un array vacio
@@ -31,38 +32,38 @@ const guardarLocalstorage = () => {
 const crearContacto = () => {
   //todo Agregar validaciones
   if (validacion()) {
-     //buscar los datos del formulario y crear un objeto contacto
-  const contactoNuevo = new Contacto(
-    inputNombre.value,
-    inputApellido.value,
-    inputTelefono.value,
-    inputEmail.value,
-    inputImagen.value.length !== 0
-      ? inputImagen.value
-      : "https://images.pexels.com/photos/28216688/pexels-photo-28216688.png",
-    inputEmpresa.value,
-    inputPuestoTrabajo.value,
-    inputDireccion.value,
-    inputNotas.value
-  );
-  //guardar el contacto en la agenda de contactos
-  agenda.push(contactoNuevo);
-  console.log(contactoNuevo);
-  //guardar la agenda en el localstorage
-  guardarLocalstorage();
-  //mostrar un mensaje al usuario final
-  Swal.fire({
-    title: "Contacto creado",
-    text: `El contacto ${inputNombre.value} fue creado correctamente.`,
-    icon: "success",
-    confirmButtonText: "Ok",
-  });
-  //limpiar el formulario
-  limpiarFormulario();
-  //dibuje el contacto en la tabla
-  dibujarFila(contactoNuevo, agenda.length);
-  }else{
-    console.log('hay errores en la validacion')
+    //buscar los datos del formulario y crear un objeto contacto
+    const contactoNuevo = new Contacto(
+      inputNombre.value,
+      inputApellido.value,
+      inputTelefono.value,
+      inputEmail.value,
+      inputImagen.value.length !== 0
+        ? inputImagen.value
+        : "https://images.pexels.com/photos/28216688/pexels-photo-28216688.png",
+      inputEmpresa.value,
+      inputPuestoTrabajo.value,
+      inputDireccion.value,
+      inputNotas.value
+    );
+    //guardar el contacto en la agenda de contactos
+    agenda.push(contactoNuevo);
+    console.log(contactoNuevo);
+    //guardar la agenda en el localstorage
+    guardarLocalstorage();
+    //mostrar un mensaje al usuario final
+    Swal.fire({
+      title: "Contacto creado",
+      text: `El contacto ${inputNombre.value} fue creado correctamente.`,
+      icon: "success",
+      confirmButtonText: "Ok",
+    });
+    //limpiar el formulario
+    limpiarFormulario();
+    //dibuje el contacto en la tabla
+    dibujarFila(contactoNuevo, agenda.length);
+  } else {
+    console.log("hay errores en la validacion");
   }
 };
 
@@ -77,11 +78,15 @@ const cargarContactos = () => {
     agenda.map((itemContacto, indice) => dibujarFila(itemContacto, indice + 1));
   } else {
     // todo: dibujar un parrafo que diga que no tenemos contactos
+    mostrarNoHaydisponibles();
   }
   // si tengo tengo que dibujar las filas en la tabla
 };
 
 const dibujarFila = (itemContacto, fila) => {
+  if (tabla.children.length === 2) {
+    tabla.children[1].remove();
+  }
   tbody.innerHTML += `
      <tr>
                 <th scope="row">${fila}</th>
@@ -143,6 +148,10 @@ window.borrarContacto = (id) => {
       guardarLocalstorage();
       //actualizar la tabla
       tbody.children[indiceContacto].remove();
+      // si es la unica fila a borrar agregar el parrafo de no hay contactos disponibles
+      if (tbody.children.length === 0) {
+        mostrarNoHaydisponibles();
+      }
       //? actualizar el numero de fila del array.
       const filasRestantes = tbody.children;
       for (let i = 0; i < filasRestantes.length; i++) {
@@ -200,7 +209,7 @@ const editarContacto = () => {
   agenda[indiceContacto].puestoTrabajo = inputPuestoTrabajo.value;
   agenda[indiceContacto].direccion = inputDireccion.value;
   agenda[indiceContacto].notas = inputNotas.value;
-   //actualizar el localstorage
+  //actualizar el localstorage
   guardarLocalstorage();
   //actualizar fila de la tabla
   const filaEditada = tbody.children[indiceContacto];
@@ -231,6 +240,13 @@ const validacion = () => {
     datosValidos = false;
   }
   return datosValidos;
+};
+
+const mostrarNoHaydisponibles = () => {
+  const parrafo = document.createElement("p");
+  parrafo.classList.add("text-center");
+  parrafo.textContent = "No hay contactos disponibles";
+  tabla.appendChild(parrafo);
 };
 
 //manejadores de eventos
