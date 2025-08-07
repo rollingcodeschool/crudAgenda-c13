@@ -18,6 +18,22 @@ const inputEmpresa = document.getElementById("empresa");
 const tbody = document.querySelector("#tablaContactosBody");
 const tituloModal = document.getElementById("contactoModalLabel");
 const tabla = document.querySelector(".table-responsive");
+const sectionDetalles = document.getElementById("seccionDetalleContacto");
+const seccionTablaContactos = document.getElementById("seccionTablaContactos");
+// Elementos para el detalle del contacto
+const detalleFoto = document.getElementById('detalleFoto');
+const detalleNombreApellido = document.getElementById('detalleNombreApellido');
+const detalleEmail = document.getElementById('detalleEmail');
+const detalleEmailInfo = document.getElementById('detalleEmailInfo');
+const detalleTelefono = document.getElementById('detalleTelefono');
+const detalleCompany = document.getElementById('detalleCompany');
+const detalleJobTitle = document.getElementById('detalleJobTitle');
+const detalleLocation = document.getElementById('detalleLocation');
+const detalleNotes = document.getElementById('detalleNotes');
+const breadCrumbContactName = document.getElementById('breadCrumbContactName');
+const breadCrumbContacts = document.getElementById('breadCrumbContacts');
+const btnVolverTabla = document.getElementById('btnVolverTabla');
+
 let estoyCreando = true;
 let idContacto = null;
 // verificar si el localstorage tiene contactos, si no tiene hago un array vacio
@@ -104,6 +120,7 @@ const dibujarFila = (itemContacto, fila) => {
                   <button
                     type="button"
                     class="btn btn-info btn-sm me-2 btn-ver-detalle"
+                    onclick="verDetalleContacto('${itemContacto.id}')"
                   >
                     <i class="bi bi-eye"></i>
                   </button>
@@ -193,6 +210,12 @@ window.prepararContacto = (id) => {
   tituloModal.textContent = "Editar contacto";
 };
 
+window.verDetalleContacto = (id) => {
+  const contactoBuscado = agenda.find((contacto) => contacto.id === id);
+  seccionTablaContactos.classList.add("d-none");
+  sectionDetalles.classList.remove("d-none");
+}
+
 const editarContacto = () => {
   console.log("aqui tengo que editar");
   //buscar en que posicion del array esta el contacto con ID
@@ -249,6 +272,11 @@ const mostrarNoHaydisponibles = () => {
   tabla.appendChild(parrafo);
 };
 
+const mostrarTablaContactos = () => {
+    seccionTablaContactos.classList.remove('d-none');
+    sectionDetalles.classList.add('d-none');
+};
+
 //manejadores de eventos
 btnAgregarContacto.addEventListener("click", () => {
   limpiarFormulario();
@@ -265,6 +293,12 @@ formularioContacto.addEventListener("submit", (e) => {
   } else {
     editarContacto();
   }
+});
+
+btnVolverTabla.addEventListener('click', mostrarTablaContactos);
+breadCrumbContacts.addEventListener('click', (e) => {
+    e.preventDefault();
+    mostrarTablaContactos();
 });
 
 cargarContactos();
