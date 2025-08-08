@@ -1,5 +1,5 @@
 import Contacto from "./contacto.js";
-import { validarCantidadCaracteres } from "./validaciones.js";
+import { validarCantidadCaracteres, validarEmail } from "./validaciones.js";
 // elementos del DOM
 const btnAgregarContacto = document.getElementById("btnAgregarContacto");
 const modalFormularioContacto = new bootstrap.Modal(
@@ -262,6 +262,10 @@ const validacion = () => {
   if (!validarCantidadCaracteres(inputApellido, 3, 50)) {
     datosValidos = false;
   }
+  if(!validarEmail(inputEmail)) {
+    datosValidos = false; 
+  }
+  // todo: agregar el resto de las funciones de validacion
   return datosValidos;
 };
 
